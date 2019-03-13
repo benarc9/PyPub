@@ -1,2 +1,5 @@
 __pycache__
 PyPubWorkspace.code-workspace
+PyPub.egg-info
+.vscode
+pypub.cpython-36.pyc
