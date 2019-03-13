@@ -1,0 +1,4 @@
+PyPub.egg-info/PKG-INFO
+PyPub.egg-info/SOURCES.txt
+PyPub.egg-info/dependency_links.txt
+PyPub.egg-info/top_level.txt

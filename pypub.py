@@ -1,26 +1,58 @@
 from abc import ABC, abstractmethod
 
 class EventManager:
+    """Manage publishing of and subscription to event publishers.
+
+        Provides ability to subscribe and unsubscibe to topics and publish events.
+        The methods in EventManager are static because there should only ever be 
+        one instance of EventManager at any time.
+    """
+
     subscribers = {}
 
     @staticmethod
     def subscribe(subscriber):
+        """Add a subscriber based on the passed in subscriber's declared topic.
+
+        Arguments:
+        subscriber -- the Subscriber to add to future topic publications
+        """
+
         if subscriber.getTopic() not in EventManager.subscribers:
             EventManager.subscribers[subscriber.getTopic()] = []
         EventManager.subscribers[subscriber.getTopic()].append(subscriber.receive)
             
     @staticmethod
     def unsubscribe(subscriber):
+        """Remove a subscriber based on the passed in subscriber's declared topic.
+
+        Arguments:
+        subscriber -- the subscriber to be removed from future topic publications
+        """
+
         topicSubscribers = EventManager.subscribers[subscriber.getTopic()]
         del topicSubscribers[subscriber]
 
     @staticmethod
-    def publish(topic, publishData):
+    def publish(publishData, topic=""):
+        """Publish a new event with passed in data to all subscribers of the passed in topic.
+
+        Arguments:
+        publishData -- the event data
+        topic -- the topic to publish the event to (default "")
+        """
         subscribers = EventManager.subscribers[topic]
         for subscriber in subscribers:
             subscriber(publishData)
 
 class Suscriber():
+    """Receive events from the EventManager according to declared topic.
+
+        A Subscriber specifies the topic they care about which determines which events the
+        Subscriber will be notified about. Upon receiving a new event, the Subscriber's 
+        callback method is called, passing in the event data.
+    """
+
     def __init__(self, topic, callback):
         self.topic = topic
         self.callback = callback
@@ -33,6 +65,10 @@ class Suscriber():
         return self.topic
 
 class Publisher():
+    """Publishes events to the EventManager on the declared topic.
+
+        Sends event publications to the EventManager with the passed in data value.
+    """
     def __init__(self, topic):
         self.topic = topic
     
@@ -43,6 +79,10 @@ class Publisher():
         return self.topic
 
 class PublishData(ABC):
+    """Data object wrapper allowing for passing data via the EventManager
+
+        
+    """
     def __init__(self, data):
         self.data = data
 
