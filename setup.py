@@ -1,6 +1,8 @@
 from setuptools import setup
 import io, codecs, os, sys
 from setuptools.command.test import test as TestCommand
+from setuptools import setup, find_packages
+from __future__ import print_function
 
 def read(*filenames, **kwargs):
     encoding = kwargs.get('encoding', 'utf-8')
@@ -20,7 +22,9 @@ class PyTest(TestCommand):
         self.test_suite = True
 
     def run_tests(self):
-        sys.exit()
+        import pytest
+        errcode = pytest.main(self.test_args)
+        sys.exit(errcode)
 
 setup(
     name='PyPub',
@@ -29,7 +33,7 @@ setup(
     author='Ben Arceneaux',
     author_email='benarceneaux0@gmail.com',
     tests_require=['pytest'],
-    #cmdclass={'test' : PyTest},
+    cmdclass={'test' : PyTest},
     description='Simple Event Publishing Library',
     long_description = long_description,
     packages=['pypub'],
@@ -44,8 +48,8 @@ setup(
         'Operating System :: OS Independent',
         'Topic :: Software Development :: Libraries :: Python Modules',
         'Topic :: Software Development :: Libraries :: Application Frameworks'
-    ]
-    # extras_require={
-    #     'testing' : ['pytest'],
-    # }
+        ],
+    extras_require={
+        'testing': ['pytest']
+    }
 )
