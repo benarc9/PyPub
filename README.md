@@ -1,4 +1,5 @@
 Author: Ben Arceneaux
+
 E-mail: benarceneaux0@gmail.com
 
 Description: A simple Python3.65 event publishing library
