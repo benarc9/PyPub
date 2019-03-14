@@ -48,9 +48,11 @@ class EventManager:
 class Suscriber():
     """Receive events from the EventManager according to declared topic.
 
-        A Subscriber specifies the topic they care about which determines which events the
-        Subscriber will be notified about. Upon receiving a new event, the Subscriber's 
-        callback method is called, passing in the event data.
+        A Subscriber specifies the topic they care about. The Subscriber's callback
+        will only be called if the published event topic matches the Subscriber's 
+        declared topic. Upon receiving a new event, the Subscriber's callback method 
+        is called. A PublishData object may or may not be passed into the Subscriber's
+        callback method.
     """
 
     def __init__(self, topic, callback):
@@ -67,7 +69,7 @@ class Suscriber():
 class Publisher():
     """Publishes events to the EventManager on the declared topic.
 
-        Sends event publications to the EventManager with the passed in data value.
+       Sends event publications to the EventManager with the passed in data value.
     """
     def __init__(self, topic):
         self.topic = topic
@@ -79,9 +81,11 @@ class Publisher():
         return self.topic
 
 class PublishData(ABC):
-    """Data object wrapper allowing for passing data via the EventManager
+    """Data object wrapper passed to the EventManager as event data.
 
-        
+        PublishData objects are simply wrappers around an object that one
+        wishes to pass into an event as event data when that event is 
+        published.
     """
     def __init__(self, data):
         self.data = data
