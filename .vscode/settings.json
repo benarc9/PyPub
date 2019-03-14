@@ -1,4 +1,5 @@
 {
     "terminal.integrated.rightClickBehavior": "default",
-    "csharp.suppressDotnetInstallWarning": true
+    "csharp.suppressDotnetInstallWarning": true,
+    "restructuredtext.confPath": "${workspaceFolder}\\docs"
 }
